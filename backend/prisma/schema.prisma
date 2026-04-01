@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  diagrams  Diagram[]
+}
+
+model Diagram {
+  id          String               @id @default(cuid())
+  name        String
+  projectId   String
+  project     Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  components  DiagramComponent[]
+  connections DiagramConnection[]
+  mermaidCode String?
+  version     Int                  @default(1)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+model DiagramComponent {
+  id          String              @id @default(cuid())
+  diagramId   String
+  diagram     Diagram             @relation(fields: [diagramId], references: [id], onDelete: Cascade)
+  name        String
+  type        String
+  posX        Float               @default(0)
+  posY        Float               @default(0)
+  createdAt   DateTime            @default(now())
+  connections DiagramConnection[] @relation("from")
+}
+
+model DiagramConnection {
+  id              String           @id @default(cuid())
+  diagramId       String
+  diagram         Diagram          @relation(fields: [diagramId], references: [id], onDelete: Cascade)
+  fromComponentId String
+  fromComponent   DiagramComponent @relation("from", fields: [fromComponentId], references: [id], onDelete: Cascade)
+  toComponentId   String
+  label           String?
+  createdAt       DateTime         @default(now())
+}
