@@ -364,7 +364,7 @@ output "aws_account_id" {
 aws_region       = "us-east-1"
 allowed_ssh_cidr = "0.0.0.0/32"           # CAMBIAR A TU IP: "203.0.113.45/32"
 db_username      = "diagramadmin"
-db_password      = "DiagramPass123!@"     # CAMBIAR EN PRODUCCIÓN
+db_password      = "REPLACE_WITH_STRONG_PASSWORD"
 ```
 
 **Crear: `infra/user_data.sh`** (script para iniciar EC2)
@@ -405,7 +405,7 @@ npm install -D prisma nodemon
 
 # Create .env file (CAMBIAR valores)
 cat > .env << 'EOF'
-DATABASE_URL="postgresql://diagramadmin:DiagramPass123!@RDS_ENDPOINT:5432/diagramdb"
+DATABASE_URL="postgresql://diagramadmin:<DB_PASSWORD>@RDS_ENDPOINT:5432/diagramdb"
 NODE_ENV="production"
 PORT=3000
 AWS_REGION="us-east-1"
@@ -493,7 +493,7 @@ mkdir prisma
 **Crear: `backend/.env`**
 
 ```
-DATABASE_URL="postgresql://diagramadmin:DiagramPass123!@ANOTA_RDS_ENDPOINT:5432/diagramdb"
+DATABASE_URL="postgresql://diagramadmin:<DB_PASSWORD>@ANOTA_RDS_ENDPOINT:5432/diagramdb"
 NODE_ENV="development"
 PORT=3000
 AWS_REGION="us-east-1"
@@ -503,7 +503,7 @@ S3_BUCKET="ANOTA_S3_BUCKET_NAME"
 **Crear: `backend/.env.example`**
 
 ```
-DATABASE_URL="postgresql://user:password@localhost:5432/diagramdb"
+DATABASE_URL="postgresql://<USER>:<DB_PASSWORD>@localhost:5432/diagramdb"
 NODE_ENV="development"
 PORT=3000
 AWS_REGION="us-east-1"

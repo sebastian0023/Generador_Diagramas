@@ -1,6 +1,7 @@
 // Express server - Diagram Generator
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const diagramRoutes = require("./routes/diagrams");
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok' });

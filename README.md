@@ -86,8 +86,10 @@ terraform output
 aws_region       = "us-east-1"
 allowed_ssh_cidr = "TU_IP/32"        # Cambiar a tu IP
 db_username      = "diagramadmin"
-db_password      = "TuPassword123!@" # Cambiar contraseña
+db_password      = "REPLACE_WITH_STRONG_PASSWORD"
 ```
+
+Use a strong, unique password in your local `terraform.tfvars`. Do not commit real secrets.
 
 ### 2️⃣ Setup Backend (Node.js)
 
@@ -99,7 +101,7 @@ npm install
 
 # Crear .env con datos de AWS
 cat > .env << EOF
-DATABASE_URL="postgresql://diagramadmin:TuPassword123!@RDS_ENDPOINT:5432/diagramdb"
+DATABASE_URL="postgresql://diagramadmin:<DB_PASSWORD>@RDS_ENDPOINT:5432/diagramdb"
 NODE_ENV="production"
 PORT=3000
 AWS_REGION="us-east-1"

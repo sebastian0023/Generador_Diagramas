@@ -33,7 +33,7 @@ npm install -D prisma nodemon
 
 # Create .env file (CAMBIAR valores)
 cat > .env << 'EOF'
-DATABASE_URL="postgresql://diagramadmin:DiagramPass123!@RDS_ENDPOINT:5432/diagramdb"
+DATABASE_URL="postgresql://diagramadmin:<DB_PASSWORD>@RDS_ENDPOINT:5432/diagramdb"
 NODE_ENV="production"
 PORT=3000
 AWS_REGION="us-east-1"

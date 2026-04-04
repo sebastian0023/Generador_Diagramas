@@ -296,7 +296,7 @@ Response: { status: "OK" }
 ### Backend (.env)
 
 ```
-DATABASE_URL=postgresql://user:pass@rds-endpoint:5432/diagramdb
+DATABASE_URL=postgresql://<USER>:<DB_PASSWORD>@rds-endpoint:5432/diagramdb
 NODE_ENV=production
 PORT=3000
 AWS_REGION=us-east-1
