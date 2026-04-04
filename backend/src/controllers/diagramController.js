@@ -2,6 +2,11 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+function internalError(res, err) {
+  console.error(err);
+  res.status(500).json({ error: 'Internal server error' });
+}
+
 async function createDiagram(req, res) {
   try {
     const { projectName, diagramName } = req.body;
@@ -18,7 +23,7 @@ async function createDiagram(req, res) {
 
     res.json(project.diagrams[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 }
 
@@ -32,7 +37,7 @@ async function getDiagram(req, res) {
     if (!diagram) return res.status(404).json({ error: 'Diagram not found' });
     res.json(diagram);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 }
 
@@ -52,7 +57,7 @@ async function addComponent(req, res) {
 
     res.json(component);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 }
 
@@ -71,7 +76,7 @@ async function addConnection(req, res) {
 
     res.json(connection);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 }
 
@@ -99,7 +104,6 @@ async function generateMermaid(req, res) {
     }
 
     for (const conn of diagram.connections) {
-      const label = conn.label ? `|${conn.label}|` : '';
       mermaid += `  ${conn.fromComponentId} -->|${conn.label || ''}| ${conn.toComponentId}\n`;
     }
 
@@ -110,7 +114,7 @@ async function generateMermaid(req, res) {
 
     res.json({ mermaidCode: mermaid });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 }
 
@@ -133,7 +137,7 @@ async function exportDiagram(req, res) {
       res.status(400).json({ error: 'For MVP only mermaid format is supported' });
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 }
 

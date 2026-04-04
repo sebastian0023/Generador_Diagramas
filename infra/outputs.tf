@@ -9,13 +9,18 @@ output "s3_bucket_name" {
 }
 
 output "rds_endpoint" {
-  description = "RDS endpoint"
+  description = "RDS endpoint (private - accessible from EC2 only)"
   value       = aws_db_instance.postgres.endpoint
 }
 
 output "rds_database_name" {
   description = "RDS database name"
   value       = aws_db_instance.postgres.db_name
+}
+
+output "ecr_repository_url" {
+  description = "ECR repository URL for backend image"
+  value       = aws_ecr_repository.backend.repository_url
 }
 
 output "aws_account_id" {
